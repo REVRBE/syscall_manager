@@ -16,7 +16,8 @@ A lightweight, high-performance C++ library for managing both indirect and direc
 ## Installation
 1. Clone the repository
 2. Open the solution in Visual Studio
-3. Build the project
+3. Make sure to enable 'masm' under Build Customizations and use C++ 20
+4. Build the project 
 
 ## Usage
 ```
