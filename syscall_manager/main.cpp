@@ -12,10 +12,10 @@ int main() {
         auto MessageBoxA = syscall_manager::instance().get_indirect_syscall<MessageBoxA_t>("user32.dll", "MessageBoxA");
 
         if (MessageBoxA) {
-            (*MessageBoxA)(NULL, "Hello, World! (Indirect)", "Syscall Manager", MB_OK);
+            (*MessageBoxA)(NULL, "Hello, World! (Indirect)", "[syscall_manager]", MB_OK);
         }
         else {
-            std::cerr << "Failed to get MessageBoxA syscall" << std::endl;
+            std::cerr << "[syscall_manager] failed to get MessageBoxA syscall" << std::endl;
         }
 
         // Example of direct syscall (NtQuerySystemInformation)
@@ -25,31 +25,31 @@ int main() {
             SYSTEM_BASIC_INFORMATION sbi;
             ULONG returnLength = 0;
 
-            std::cout << "Syscall number for NtQuerySystemInformation: 0x"
+            std::cout << "[syscall_manager] syscall number for NtQuerySystemInformation: 0x"
                 << std::hex << std::setw(4) << std::setfill('0')
                 << syscall_manager::instance().get_last_syscall_number() << std::endl;
 
             NTSTATUS status = (*NtQuerySystemInformation)(SystemBasicInformation, &sbi, sizeof(sbi), &returnLength);
 
-            std::cout << "NtQuerySystemInformation called. Status: 0x"
+            std::cout << "[syscall_manager] NtQuerySystemInformation called. status: 0x"
                 << std::hex << std::setw(8) << std::setfill('0') << status << std::endl;
 
             if (status == 0) { 
-                std::cout << "Number of processors (Direct syscall): " << std::to_string(sbi.NumberOfProcessors) << std::endl;
+                std::cout << "[syscall_manager] number of processors (Direct syscall): " << std::to_string(sbi.NumberOfProcessors) << std::endl;
             }
             else {
-                std::cerr << "Failed to query system information, NTSTATUS: 0x"
+                std::cerr << "[syscall_manager] failed to query system information, status: 0x"
                     << std::hex << std::setw(8) << std::setfill('0') << status << std::endl;
             }
         }
         else {
-            std::cerr << "Failed to get NtQuerySystemInformation syscall" << std::endl;
+            std::cerr << "[syscall_manager] failed to get NtQuerySystemInformation syscall" << std::endl;
         }
 
         system("pause");
     }
     catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "[syscall_manager] error: " << e.what() << std::endl;
     }
 
     return 0;
