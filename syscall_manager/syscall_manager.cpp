@@ -36,7 +36,7 @@ void syscall_manager::load_module(const std::string& module_name) {
         loaded_modules_[module_name] = module;
     }
     else {
-        throw std::runtime_error("Failed to load module: " + module_name);
+        throw std::runtime_error("[syscall_manager] failed to load module: " + module_name);
     }
 }
 
